@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hành Trình 40 Năm Trên Sa Mạc - Thử Thách Đức Tin</title>
+    <!-- Favicon Google & Trình duyệt web -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="/favicon/favicon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicon/favicon-16x16.png"
+    />
+    <!--  -->
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="/favicon/apple-icon-57x57.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="/favicon/apple-icon-60x60.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="/favicon/apple-icon-72x72.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="/favicon/apple-icon-76x76.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="/favicon/apple-icon-114x114.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="/favicon/apple-icon-120x120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="/favicon/apple-icon-144x144.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="/favicon/apple-icon-152x152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/favicon/apple-icon-180x180.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/favicon/android-icon-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="/favicon/favicon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicon/favicon-16x16.png"
+    />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta
+      name="msapplication-TileImage"
+      content="/favicon/ms-icon-144x144.png"
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="game-container">
+      <!-- Màn hình Đăng Nhập -->
+      <div id="login-screen" class="screen active">
+        <div class="logo-icon">🔐</div>
+        <h2>ĐĂNG NHẬP HÀNH TRÌNH</h2>
+        <p>
+          Hãy nhập tên tài khoản của bạn để lưu giữ thành tựu và kho tàng thẻ
+          bài. Nếu chơi khách, thành tựu sẽ mất khi tải lại trang!
+        </p>
+        <div
+          class="menu-buttons"
+          style="
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          "
+        >
+          <input
+            type="text"
+            id="username-input"
+            placeholder="Nhập tên của bạn..."
+            style="
+              padding: 12px;
+              border-radius: 8px;
+              border: 1px solid #434b6c;
+              background: #2d3250;
+              color: white;
+              font-size: 14px;
+              text-align: center;
+              margin-bottom: 10px;
+              width: 80%;
+            "
+          />
+          <button
+            class="main-btn"
+            onclick="handleLogin()"
+            style="width: 80%; margin-bottom: 8px"
+          >
+            Đăng Nhập & Lưu Trữ
+          </button>
+          <button
+            class="main-btn hardcore-btn"
+            onclick="skipLogin()"
+            style="width: 80%"
+          >
+            Chơi Khách (Không Lưu)
+          </button>
+        </div>
+      </div>
+
+      <!-- Màn hình chính -->
+      <div id="start-screen" class="screen">
+        <div class="logo-icon">⛺</div>
+        <h1>HÀNH TRÌNH 40 NĂM SA MẠC</h1>
+        <p>
+          Vượt qua 40 năm thử thách khắc nghiệt trong hoang địa, giữ vững đức
+          tin để bước vào Đất Hứa.
+        </p>
+        <div
+          class="menu-buttons"
+          style="
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          "
+        >
+          <button
+            class="main-btn"
+            onclick="startGame(false)"
+            style="width: 80%; margin-bottom: 8px"
+          >
+            Bắt Đầu Hành Trình
+          </button>
+          <button
+            class="main-btn hardcore-btn"
+            onclick="startGame(true)"
+            style="width: 80%; margin-bottom: 8px"
+          >
+            Chế Độ Hardcore (10s/Lượt)
+          </button>
+          <button
+            class="main-btn codex-btn"
+            onclick="openCodex()"
+            style="width: 80%; margin-bottom: 8px"
+          >
+            📖 Kho Tàng Thẻ Bài (<span id="card-count">0</span>/7)
+          </button>
+          <button
+            class="main-btn"
+            onclick="logout()"
+            style="background: #7f8c8d; width: 80%"
+          >
+            Đăng Xuất
+          </button>
+        </div>
+      </div>
+
+      <!-- Màn hình chơi game -->
+      <div id="game-screen" class="screen">
+        <div id="top-bar">
+          <div id="day-counter">Năm thứ 1 / 40</div>
+          <div id="weather-badge" class="weather-normal">☀️ Nắng Gắt</div>
+          <div id="time-indicator">☀️ Giai đoạn</div>
+        </div>
+
+        <!-- Thanh trạng thái tài nguyên -->
+        <div id="stats-panel">
+          <div class="stat-bar-container">
+            <span class="stat-icon">💧</span>
+            <div class="progress-bar">
+              <div id="water-fill" class="fill water"></div>
+            </div>
+            <span id="water-text" class="stat-value">100%</span>
+          </div>
+          <div class="stat-bar-container">
+            <span class="stat-icon">🍞</span>
+            <div class="progress-bar">
+              <div id="food-fill" class="fill food"></div>
+            </div>
+            <span id="food-text" class="stat-value">100%</span>
+          </div>
+          <div class="stat-bar-container">
+            <span class="stat-icon">⚡</span>
+            <div class="progress-bar">
+              <div id="health-fill" class="fill health"></div>
+            </div>
+            <span id="health-text" class="stat-value">100%</span>
+          </div>
+          <div class="stat-bar-container">
+            <span class="stat-icon">✨</span>
+            <div class="progress-bar">
+              <div id="faith-fill" class="fill faith"></div>
+            </div>
+            <span id="faith-text" class="stat-value">50%</span>
+          </div>
+        </div>
+
+        <!-- Khu vực cốt truyện & sự kiện -->
+        <div id="story-panel">
+          <div id="visual-icon">🐪</div>
+          <h2 id="story-title">Tiêu đề sự kiện</h2>
+          <div id="story-desc-box">
+            <p id="story-desc">Nội dung câu chuyện...</p>
+          </div>
+        </div>
+
+        <!-- Các lựa chọn -->
+        <div id="choices-panel">
+          <!-- Nút lựa chọn thêm tự động bằng JS -->
+        </div>
+      </div>
+
+      <!-- Màn hình Kho Tàng Thẻ Bài (Codex) -->
+      <div id="codex-screen" class="screen">
+        <h2>📖 Kho Tàng Thẻ Bài Kinh Thánh</h2>
+        <p>
+          Sưu tầm đủ thẻ bài qua 40 năm hoang địa để minh chứng cho hành trình
+          đức tin.
+        </p>
+        <div id="codex-grid"></div>
+        <button class="main-btn" onclick="closeCodex()">Quay Lại</button>
+      </div>
+
+      <!-- Màn hình Kết Thúc -->
+      <div id="end-screen" class="screen">
+        <div id="end-icon">✨</div>
+        <h2 id="end-title">KẾT QUẢ</h2>
+        <p id="end-desc">Mô tả kết quả hành trình...</p>
+        <div id="reward-card-notice"></div>
+        <button class="main-btn" onclick="switchScreen('start-screen')">
+          Về Trang Chủ
+        </button>
+      </div>
+    </div>
+
+    <!-- Popup nhận Thẻ Bài -->
+    <div id="scripture-popup" class="popup hidden">
+      <div class="popup-content">
+        <h3 id="popup-title">✨ Nhận Được Thẻ Bài Mới!</h3>
+        <blockquote id="popup-verse">
+          "Lời Chúa là ngọn đèn cho chân tôi..."
+        </blockquote>
+        <button class="main-btn" onclick="closeScripturePopup()">
+          Tiếp Tục Hành Trình
+        </button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

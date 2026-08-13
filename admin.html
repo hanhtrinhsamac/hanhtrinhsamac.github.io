@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trang Quản Trị Admin - Hoang Địa 40 Năm</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div
+      id="game-container"
+      style="justify-content: flex-start; padding-top: 30px"
+    >
+      <div style="text-align: center; margin-bottom: 20px">
+        <h2 style="color: #f1c40f; margin-bottom: 5px">
+          ⚙️ TRANG QUẢN TRỊ ADMIN
+        </h2>
+        <p style="font-size: 12px; color: #aaa">
+          Khu vực bảo mật riêng để quản lý các tài khoản (TLK) lưu trữ.
+        </p>
+      </div>
+
+      <div
+        id="account-list-container"
+        style="
+          width: 100%;
+          max-height: 520px;
+          overflow-y: auto;
+          margin-bottom: 20px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          padding: 0 5px;
+        "
+      >
+        <!-- Danh sách tài khoản load bằng JS -->
+      </div>
+
+      <div
+        style="display: flex; gap: 10px; justify-content: center; width: 100%"
+      >
+        <button
+          class="main-btn"
+          onclick="renderAdminAccounts()"
+          style="background: #27ae60; width: 45%"
+        >
+          Làm Mới Danh Sách
+        </button>
+        <button
+          class="main-btn"
+          onclick="window.location.href = 'index.html'"
+          style="background: #7f8c8d; width: 45%"
+        >
+          Quay Lại Game
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // Tự động load danh sách tài khoản ngay khi mở trang admin.html
+      window.onload = function () {
+        renderAdminAccounts();
+      };
+
+      function renderAdminAccounts() {
+        const container = document.getElementById("account-list-container");
+        container.innerHTML = "";
+
+        let accounts = [];
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (key && key.startsWith("desert_cards_")) {
+            const username = key.replace("desert_cards_", "");
+            accounts.push(username);
+          }
+        }
+
+        if (accounts.length === 0) {
+          container.innerHTML = `<p style="color: #7f8c8d; font-style: italic; text-align: center; margin-top: 50px;">Chưa có tài khoản nào lưu trữ thành tựu trên thiết bị này.</p>`;
+          return;
+        }
+
+        accounts.forEach((acc) => {
+          const item = document.createElement("div");
+          item.className = "admin-account-item";
+
+          let unlockedCount = 0;
+          try {
+            const data = JSON.parse(
+              localStorage.getItem(`desert_cards_${acc}`) || "[]",
+            );
+            unlockedCount = data.length;
+          } catch (e) {}
+
+          item.innerHTML = `
+                    <div>
+                        <span style="font-size: 13px; color: #fff; font-weight: bold;">👤 ${acc}</span>
+                        <p style="font-size: 11px; color: #f1c40f; margin: 2px 0 0 0;">Thẻ bài đã lưu: ${unlockedCount}/7</p>
+                    </div>
+                    <button class="delete-btn" onclick="deleteAccount('${acc}')">Xóa TLK</button>
+                `;
+          container.appendChild(item);
+        });
+      }
+
+      function deleteAccount(username) {
+        if (
+          confirm(
+            `Bạn có chắc chắn muốn xóa tài khoản "${username}" cùng toàn bộ dữ liệu lưu trữ không?`,
+          )
+        ) {
+          localStorage.removeItem(`desert_cards_${username}`);
+          renderAdminAccounts();
+        }
+      }
+    </script>
+  </body>
+</html>
